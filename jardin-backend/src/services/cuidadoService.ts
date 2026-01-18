@@ -40,7 +40,7 @@ export class CuidadoService {
     return errores;
   }
 
-  // Validar FechaFin >= FechaInicio
+  // Validar FechaFin >= FechaInicio. 
   validarFechas(fechaInicio: Date, fechaFin: Date): string | null {
     if (fechaFin < fechaInicio) {
       return "FechaFin no puede ser anterior a FechaInicio";

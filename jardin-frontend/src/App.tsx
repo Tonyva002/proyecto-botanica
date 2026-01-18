@@ -1,11 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PlantasPage from "./pages/PlantasPage";
-import PlantaDetailPage from "./pages/PlantaDetailPage";
-import CuidadosPage from "./pages/CuidadosPage";
 
-import { AppBar, Toolbar, Typography, Button, Container, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  Box,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import PlantasPage from "./presentation/pages/PlantasPage";
+import PlantaDetailPage from "./presentation/pages/PlantaDetailPage";
+import CuidadosPage from "./presentation/pages/CuidadosPage";
 
 const App: React.FC = () => {
   return (
@@ -35,7 +42,10 @@ const App: React.FC = () => {
           <Route path="/plantas/:id" element={<PlantaDetailPage />} />
           <Route path="/cuidados" element={<CuidadosPage />} />
           <Route path="/" element={<PlantasPage />} />
-          <Route path="*" element={<Typography>Página no encontrada</Typography>} />
+          <Route
+            path="*"
+            element={<Typography>Página no encontrada</Typography>}
+          />
         </Routes>
       </Container>
     </Router>
