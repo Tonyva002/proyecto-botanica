@@ -15,6 +15,8 @@ This application allows you to see the number of plants in a garden, see the det
 - React js
 - Axios
 - Docker
+- MVVM
+- Clean Architecture
   
 
 ### Necessary tool:
