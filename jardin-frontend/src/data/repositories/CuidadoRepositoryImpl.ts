@@ -7,8 +7,8 @@ import CuidadoApiDataSource from "../datasources/CuidadoApiDataSource";
 
 export class CuidadoRepositoryImpl implements CuidadoRepository {
   constructor(private dataSource: CuidadoApiDataSource) {}
-  getAll(): Promise<Cuidado[]> {
-    return this.dataSource.getAll();
+  findByPlanta(plantaId: number): Promise<Cuidado[]> {
+    return this.dataSource.getByPlanta(plantaId);
   }
   create(payload: CreateCuidadoPayload): Promise<Cuidado> {
     return this.dataSource.create(payload);

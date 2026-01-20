@@ -1,14 +1,12 @@
-import { Cuidado } from '../entities/Cuidado';
-
+import { Cuidado } from "../entities/Cuidado";
 
 export interface CreateCuidadoPayload {
-        tipo: string;
-        fechaInicio: string;
-        plantaId: number;
-
+  tipo: string;
+  fechaInicio: string;
+  plantaId: number;
 }
 
 export interface CuidadoRepository {
-        getAll(): Promise<Cuidado[]>;
-        create(data: CreateCuidadoPayload): Promise<Cuidado>;
+  findByPlanta(plantaId: number): Promise<Cuidado[]>;
+  create(data: CreateCuidadoPayload): Promise<Cuidado>;
 }

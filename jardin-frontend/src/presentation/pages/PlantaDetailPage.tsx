@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import usePlantaDetailViewModel from "../viewmodels/usePlantaDetailViewModel";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -27,7 +28,7 @@ const PlantaDetailPage = () => {
   if (!planta) {
     return (
       <Typography variant="h6" color="error">
-        No se encontro la planta
+        No se encontró la planta
       </Typography>
     );
   }
@@ -41,8 +42,18 @@ const PlantaDetailPage = () => {
         </Typography>
 
         <Typography variant="subtitle1" gutterBottom>
-          Ubicacion: {planta.ubicacion || "No especificada"}
+          Ubicación: {planta.ubicacion || "No especificada"}
         </Typography>
+
+        {/* 👉 BOTÓN A CUIDADOS */}
+        <Button
+          variant="contained"
+          sx={{ my: 2 }}
+          component={RouterLink}
+          to={`/plantas/${id}/cuidados`}
+        >
+          Gestionar cuidados
+        </Button>
 
         {/* 🌿 Cuidados */}
         <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
@@ -54,7 +65,6 @@ const PlantaDetailPage = () => {
             {planta.cuidados.map((c) => (
               <ListItem key={c.id} divider>
                 <ListItemText
-                  //primary={`${c.tipo} - ${new Date(c.fechaInicio).toLocaleDateString()}`}
                   primary={`${c.tipo} - ${formatDate(c.fechaInicio)}`}
                   secondary={c.notas || ""}
                 />

@@ -4,7 +4,7 @@ export interface Cuidado {
   id: number;
   tipo: string;
   fechaInicio: string;
-  fechaFin: string | null;
+  fechaFin?: string | null;
   notas?: string;
-  planta: Planta;
+  planta?: Planta;
 }

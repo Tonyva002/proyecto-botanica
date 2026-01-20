@@ -1,7 +1,7 @@
 import CuidadosPage from "../CuidadosPage";
 import useCuidadosViewModel from "../../viewmodels/useCuidadosViewModel";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 // Mock del viewModel
 jest.mock("../../viewmodels/useCuidadosViewModel");
@@ -10,8 +10,14 @@ const mockUseCuidadosViewModel = useCuidadosViewModel as jest.MockedFunction<
   typeof useCuidadosViewModel
 >;
 
-const renderWithRouter = (ui: React.ReactNode) =>
-  render(<MemoryRouter>{ui}</MemoryRouter>);
+const renderWithRouter = (ui: React.ReactNode, route = "/plantas/1") =>
+  render(
+    <MemoryRouter initialEntries={[route]}>
+      <Routes>
+        <Route path="/plantas/:id" element={ui} />
+      </Routes>
+    </MemoryRouter>,
+  );
 
 describe("CuidadosPage", () => {
   const mockCrearCuidado = jest.fn();
@@ -73,7 +79,7 @@ describe("CuidadosPage", () => {
     expect(screen.getByText("Rosa - Poda")).toBeInTheDocument();
   });
 
-  test("envia el formulario y llama a crearCuidado", async () => {
+  test("envia el formulario y llama a crearCuidado con plantaId", async () => {
     mockUseCuidadosViewModel.mockReturnValue({
       loading: false,
       cuidados: [],
@@ -81,10 +87,6 @@ describe("CuidadosPage", () => {
     });
 
     renderWithRouter(<CuidadosPage />);
-
-    fireEvent.change(screen.getByLabelText(/id planta/i), {
-      target: { value: "1" },
-    });
 
     fireEvent.change(screen.getByLabelText(/tipo/i), {
       target: { value: "Riego" },

@@ -1,33 +1,41 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Cuidado } from "../../domain/entities/Cuidado";
 import {
   createCuidadoUseCase,
   getCuidadosUseCase,
 } from "../../core/composition/cuidadoCompositionRoot";
 
-export default function useCuidadosViewModel() {
+export default function useCuidadosViewModel(id?: string) {
   const [cuidados, setCuidados] = useState<Cuidado[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const cargar = async () => {
+  const cargar = useCallback(async () => {
+    if (!id) return;
     setLoading(true);
-    const data = await getCuidadosUseCase.execute();
-    setCuidados(data);
-    setLoading(false);
-  };
+    try {
+      const data = await getCuidadosUseCase.execute(Number(id));
+      setCuidados(data);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
 
   const crearCuidado = async (payload: {
     plantaId: number;
     tipo: string;
     fechaInicio: string;
   }) => {
-    await createCuidadoUseCase.execute(payload);
-    await cargar();
+    try {
+      await createCuidadoUseCase.execute(payload);
+      await cargar();
+    } catch (error: any) {
+      throw new Error(error?.message || "Error inesperado al crear el cuidado");
+    }
   };
 
   useEffect(() => {
     cargar();
-  }, []);
+  }, [cargar]);
 
   return {
     cuidados,

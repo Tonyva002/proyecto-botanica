@@ -44,7 +44,7 @@ describe("PlantaDetailPage", () => {
 
     renderWithRouter(<PlantaDetailPage />);
 
-    expect(screen.getByText(/no se encontro la planta/i)).toBeInTheDocument();
+    expect(screen.getByText(/no se encontró la planta/i)).toBeInTheDocument();
   });
 
   test("renderiza los datos principales de la planta", () => {
@@ -63,7 +63,11 @@ describe("PlantaDetailPage", () => {
     renderWithRouter(<PlantaDetailPage />);
 
     expect(screen.getByText("Aloe Vera (Suculenta)")).toBeInTheDocument();
-    expect(screen.getByText(/ubicacion: patio/i)).toBeInTheDocument();
+    expect(screen.getByText(/ubicación: patio/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /gestionar cuidados/i }),
+    ).toBeInTheDocument();
+
     expect(screen.getByText("Cuidados")).toBeInTheDocument();
     expect(screen.getByText("No hay cuidados registrados")).toBeInTheDocument();
   });
@@ -84,13 +88,6 @@ describe("PlantaDetailPage", () => {
             fechaInicio: "2025-02-10",
             fechaFin: null,
             notas: "Cada 3 dias",
-            planta: {
-              id: 1,
-              nombre: "Aloe Vera",
-              especie: "Suculenta",
-              ubicacion: "Patio",
-              fechaRegistro: "2025-02-01",
-            },
           },
           {
             id: 2,
@@ -98,13 +95,6 @@ describe("PlantaDetailPage", () => {
             fechaInicio: "2025-02-15",
             fechaFin: null,
             notas: "",
-            planta: {
-              id: 1,
-              nombre: "Aloe Vera",
-              especie: "Suculenta",
-              ubicacion: "Patio",
-              fechaRegistro: "2025-02-01",
-            },
           },
         ],
       },

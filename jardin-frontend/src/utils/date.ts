@@ -1,16 +1,9 @@
 export const formatDate = (dateStr: string) => {
-  // Añadimos "T00:00:00" para evitar que el navegador lo interprete como UTC
-  // si el string solo trae la fecha (YYYY-MM-DD)
-  const date = new Date(
-    dateStr.includes("T") ? dateStr : `${dateStr}T00:00:00`,
-  );
+  if (!dateStr) return "";
 
-  if (isNaN(date.getTime())) return dateStr;
+  const [datePart] = dateStr.split("T");
 
-  // Usar métodos locales (quitar el "UTC")
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
+  const [year, month, day] = datePart.split("-");
 
   return `${day}/${month}/${year}`;
 };

@@ -1,15 +1,19 @@
 import "reflect-metadata";
 import express from "express";
-import { AppDataSource } from "./data-source";
-import plantasRouter from "./routes/plantas";
-import cuidadosRouter from "./routes/cuidados";
-import { seed } from "./seed";
 import cors from "cors";
+
+import { AppDataSource } from "./infrastructure/database/data-source";
+import { seedDatabase } from "./infrastructure/database/seed";
+
+import plantasRouter from "./presentation/routes/plantas.routes";
+import cuidadosRouter from "./presentation/routes/Cuidados.routes";
+
+const PORT = 4000;
 
 /**
  * Inicializa la conexión a la base de datos y arranca el servidor Express.
  */
-async function startServer() {
+async function start() {
   let connected = false;
 
   // Bucle de reintento para la conexión a la base de datos (DB)
@@ -17,7 +21,7 @@ async function startServer() {
     try {
       await AppDataSource.initialize();
       connected = true;
-      console.log("✅ Conectado a MySQL usando TypeORM");
+      console.log("✅ Conectado a la base de datos");
     } catch (error) {
       console.error("❌ Error de conexión, reintentando en 3s...");
       // Espera 3 segundos antes de reintentar la conexión
@@ -26,33 +30,41 @@ async function startServer() {
   }
 
   // Ejecuta la siembra inicial de datos (seed)
-  await seed(); 
+  await seedDatabase();
   console.log("🌱 Datos iniciales cargados (seed ejecutado)");
 
   // Configuración de Express
   const app = express();
-  
+
   // Middleware para parsear JSON en el cuerpo de las solicitudes
   app.use(express.json());
-  
+
   // Middleware para habilitar CORS (Cross-Origin Resource Sharing)
-  app.use(cors({
-      // Permite todas las fuentes, si necesitas restringir, usa origin: ['http://localhost:3000']
-      origin: '*', 
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  app.use(
+    cors({
+      origin: "*",
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true,
-  }));
+    }),
+  );
 
   // Rutas de la API
   app.use("/api/plantas", plantasRouter);
   app.use("/api/cuidados", cuidadosRouter);
 
+  // 🩺 Health check
+  app.get("/health", (_, res) => {
+    res.json({ status: "OK" });
+  });
+
   // Iniciar el servidor
-  const PORT = 4000;
   app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
   });
 }
 
 // Llama a la función para iniciar todo
-startServer();
+start().catch((error) => {
+  console.error("💥 Error crítico al iniciar la app", error);
+  process.exit(1);
+});
