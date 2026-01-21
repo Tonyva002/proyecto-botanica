@@ -18,7 +18,9 @@ const PlantasPage = () => {
 
   return (
     <Box>
-      <Typography variant="h4">🌱 Plantas</Typography>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        🌱 Plantas
+      </Typography>
       <Box
         sx={{
           display: "grid",

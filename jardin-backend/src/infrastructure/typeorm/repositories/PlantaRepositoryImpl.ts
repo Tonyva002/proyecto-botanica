@@ -36,7 +36,14 @@ export class PlantaRepositoryImpl implements PlantaRepository {
       planta.especie,
       planta.ubicacion,
       planta.cuidados.map(
-        (c) => new Cuidado(c.id, c.tipo, c.fechaInicio, c.fechaFin, c.notas),
+        (c) =>
+          new Cuidado(
+            c.id,
+            c.tipo,
+            c.fechaInicio,
+            c.fechaFin ?? undefined,
+            c.notas ?? undefined,
+          ),
       ),
     );
   }

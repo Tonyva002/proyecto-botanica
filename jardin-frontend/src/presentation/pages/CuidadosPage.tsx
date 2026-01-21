@@ -22,10 +22,15 @@ import { getToday, formatDate } from "../../utils/date";
 const CuidadosPage = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { cuidados, loading, crearCuidado } = useCuidadosViewModel(id);
+  const { cuidados, plantaNombre, loading, crearCuidado } =
+    useCuidadosViewModel(id);
 
   const [tipo, setTipo] = useState("");
   const [fechaInicio, setFechaInicio] = useState(getToday());
+  const [fechaFin, setFechaFin] = useState(getToday());
+
+  const [notas, setNotas] = useState("");
+
   const [error, setError] = useState("");
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
 
@@ -42,8 +47,11 @@ const CuidadosPage = () => {
         plantaId: Number(id),
         tipo,
         fechaInicio,
+        fechaFin,
+        notas: notas || null,
       });
       setTipo("");
+      setNotas("");
     } catch (e: any) {
       setError(e.message || "Error inesperado al crear el cuidado");
       setOpenErrorDialog(true);
@@ -59,7 +67,7 @@ const CuidadosPage = () => {
 
   return (
     <Box>
-      <Typography variant="h4">🌿 Cuidados</Typography>
+      <Typography variant="h4">🌿 Cuidados de {plantaNombre}</Typography>
 
       <Card sx={{ my: 3 }}>
         <CardContent>
@@ -74,12 +82,31 @@ const CuidadosPage = () => {
             />
 
             <TextField
-              label="Fecha"
+              label="Fecha inicio"
               type="date"
               value={fechaInicio}
               onChange={(e) => setFechaInicio(e.target.value)}
               fullWidth
               required
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              label="Fecha fin"
+              type="date"
+              value={fechaFin}
+              onChange={(e) => setFechaFin(e.target.value)}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              label="Notas"
+              value={notas}
+              onChange={(e) => setNotas(e.target.value)}
+              fullWidth
+              multiline
+              rows={3}
               sx={{ mb: 2 }}
             />
 
@@ -92,10 +119,27 @@ const CuidadosPage = () => {
 
       <List>
         {cuidados.map((c) => (
-          <ListItem key={c.id}>
+          <ListItem key={c.id} alignItems="flex-start">
             <ListItemText
-              primary={`${c.planta?.nombre ?? "Planta"} - ${c.tipo}`}
-              secondary={formatDate(c.fechaInicio)}
+              primary={c.tipo}
+              secondary={
+                <>
+                  <Typography variant="body2">
+                    📅 Inicio: {formatDate(c.fechaInicio)}
+                  </Typography>
+
+                  {c.fechaFin && (
+                    <Typography variant="body2">
+                      ⏳ Fin: {formatDate(c.fechaFin)}
+                    </Typography>
+                  )}
+                  {c.notas && (
+                    <Typography variant="body2" color="text.secondary">
+                      📝 {c.notas}
+                    </Typography>
+                  )}
+                </>
+              }
             />
           </ListItem>
         ))}

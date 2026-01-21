@@ -15,14 +15,14 @@ export class CuidadoEntity {
   @Column({ length: 80 })
   tipo!: string;
 
-  @Column({ type: "date" })
+  @Column({ type: "datetime" })
   fechaInicio!: Date;
 
-  @Column({ type: "date", nullable: true })
-  fechaFin?: Date;
+  @Column({ type: "datetime", nullable: true })
+  fechaFin?: Date | null;
 
   @Column({ type: "text", nullable: true })
-  notas?: string;
+  notas?: string | null;
 
   @ManyToOne(() => PlantaEntity, (planta) => planta.cuidados, {
     nullable: false,

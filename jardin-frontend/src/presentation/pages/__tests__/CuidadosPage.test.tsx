@@ -29,6 +29,7 @@ describe("CuidadosPage", () => {
   test("muestra loading cuando esta cargando", () => {
     mockUseCuidadosViewModel.mockReturnValue({
       cuidados: [],
+      plantaNombre: "",
       loading: true,
       crearCuidado: mockCrearCuidado,
     });
@@ -41,6 +42,7 @@ describe("CuidadosPage", () => {
   test("renderiza la lista de cuidados", () => {
     mockUseCuidadosViewModel.mockReturnValue({
       loading: false,
+      plantaNombre: "Aloe Vera",
       crearCuidado: mockCrearCuidado,
       cuidados: [
         {
@@ -82,6 +84,7 @@ describe("CuidadosPage", () => {
   test("envia el formulario y llama a crearCuidado con plantaId", async () => {
     mockUseCuidadosViewModel.mockReturnValue({
       loading: false,
+      plantaNombre: "Aloe Vera",
       cuidados: [],
       crearCuidado: mockCrearCuidado,
     });

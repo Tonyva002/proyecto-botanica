@@ -21,9 +21,9 @@ export class CuidadoController {
       const cuidado = await this.crearCuidado.execute({
         plantaId: Number(plantaId),
         tipo,
-        fechaInicio: new Date(fechaInicio),
-        fechaFin: fechaFin ? new Date(fechaFin) : undefined,
-        notas,
+        fechaInicio,
+        fechaFin: fechaFin ?? null,
+        notas: notas ?? null,
       });
 
       return res.status(201).json(cuidado);

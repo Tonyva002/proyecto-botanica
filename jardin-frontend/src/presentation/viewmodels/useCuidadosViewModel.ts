@@ -4,17 +4,23 @@ import {
   createCuidadoUseCase,
   getCuidadosUseCase,
 } from "../../core/composition/cuidadoCompositionRoot";
+import { getPlantaByIdUseCase } from "../../core/composition/plantaCompositionRoot";
 
 export default function useCuidadosViewModel(id?: string) {
   const [cuidados, setCuidados] = useState<Cuidado[]>([]);
+  const [plantaNombre, setPlantaNombre] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   const cargar = useCallback(async () => {
     if (!id) return;
     setLoading(true);
     try {
-      const data = await getCuidadosUseCase.execute(Number(id));
-      setCuidados(data);
+      const [cuidadosData, plantaData] = await Promise.all([
+        getCuidadosUseCase.execute(Number(id)),
+        getPlantaByIdUseCase.execute(Number(id)),
+      ]);
+      setCuidados(cuidadosData);
+      setPlantaNombre(plantaData.nombre);
     } finally {
       setLoading(false);
     }
@@ -24,6 +30,8 @@ export default function useCuidadosViewModel(id?: string) {
     plantaId: number;
     tipo: string;
     fechaInicio: string;
+    fechaFin?: string | null;
+    notas?: string | null;
   }) => {
     try {
       await createCuidadoUseCase.execute(payload);
@@ -39,6 +47,7 @@ export default function useCuidadosViewModel(id?: string) {
 
   return {
     cuidados,
+    plantaNombre,
     loading,
     crearCuidado,
   };
