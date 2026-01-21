@@ -17,6 +17,8 @@ This application allows you to see the number of plants in a garden, see the det
 - Docker
 - MVVM
 - Clean Architecture
+- jest
+- testing-library
   
 
 ### Necessary tool:
@@ -36,19 +38,24 @@ This application allows you to see the number of plants in a garden, see the det
 ## Screenshots
 
 ### 1)
-![Screen 1](https://github.com/user-attachments/assets/dd665467-728e-4d26-9a26-d2b0531633be)
+![Screen 1](https://github.com/user-attachments/assets/b8a8807f-dc06-4960-81be-63e44b2ac1af)
 
 ### 2)
-![Screen 2](https://github.com/user-attachments/assets/124d1260-76f8-41b2-b151-cde1d67932ef)
+![Screen 2](https://github.com/user-attachments/assets/79247b10-88f5-41ec-88c5-cabaaf54db95)
 
 ### 3)
-![Screen 3](https://github.com/user-attachments/assets/6bb19878-7ca1-4ef9-9af4-248b2de6bf7d)
+![Screen 3](https://github.com/user-attachments/assets/fdc6898e-d9c0-4a92-89cb-027297b8892f)
 
 ### 4)
-![Screen 3](https://github.com/user-attachments/assets/d1dc6bc4-7b4a-49e7-b788-b6eca9b9a792)
+![Screen 3](https://github.com/user-attachments/assets/e3672b5e-5146-437a-8791-da6ac8584284)
 
 ### 5)
-![Screen 3](https://github.com/user-attachments/assets/bf6d721a-3f24-481f-a6ec-7edc1d5da3c7)
+![Screen 3](https://github.com/user-attachments/assets/732a0a35-08b2-4eec-bd47-b77ee6791b41)
+
+### 6)
+![Screen 3](https://github.com/user-attachments/assets/69837277-6bcf-41e6-a494-888de4d9ed10)
+
+
 
 
 ### Author
