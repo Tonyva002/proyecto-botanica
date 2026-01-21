@@ -38,7 +38,7 @@ This application allows you to see the number of plants in a garden, see the det
 ## Screenshots
 
 ### 1)
-![Screen 1](https://github.com/user-attachments/assets/32835559-30a3-4f0a-bff0-58101bf5c189)
+![Screen 1](https://github.com/user-attachments/assets/b8a8807f-dc06-4960-81be-63e44b2ac1af)
 
 ### 2)
 ![Screen 2](https://github.com/user-attachments/assets/b47e4a29-19c1-43af-a764-2b6acc6936da)
