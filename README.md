@@ -17,6 +17,8 @@ This application allows you to see the number of plants in a garden, see the det
 - Docker
 - MVVM
 - Clean Architecture
+- jest
+- testing-library
   
 
 ### Necessary tool:
