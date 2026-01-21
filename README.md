@@ -36,19 +36,19 @@ This application allows you to see the number of plants in a garden, see the det
 ## Screenshots
 
 ### 1)
-![Screen 1](https://github.com/user-attachments/assets/dd665467-728e-4d26-9a26-d2b0531633be)
+![Screen 1](https://github.com/user-attachments/assets/32835559-30a3-4f0a-bff0-58101bf5c189)
 
 ### 2)
-![Screen 2](https://github.com/user-attachments/assets/124d1260-76f8-41b2-b151-cde1d67932ef)
+![Screen 2](https://github.com/user-attachments/assets/b47e4a29-19c1-43af-a764-2b6acc6936da)
 
 ### 3)
-![Screen 3](https://github.com/user-attachments/assets/6bb19878-7ca1-4ef9-9af4-248b2de6bf7d)
+![Screen 3](<https://github.com/user-attachments/assets/d8e4369b-82c6-46cd-8d93-a82070d970f2)
 
 ### 4)
-![Screen 3](https://github.com/user-attachments/assets/d1dc6bc4-7b4a-49e7-b788-b6eca9b9a792)
+![Screen 3](<https://github.com/user-attachments/assets/d4de9e34-0aff-46aa-ba88-96dad57d34d4)
 
 ### 5)
-![Screen 3](https://github.com/user-attachments/assets/bf6d721a-3f24-481f-a6ec-7edc1d5da3c7)
+![Screen 3](<https://github.com/user-attachments/assets/de16a77f-aedf-4800-9b5f-e593dc1fac3f)
 
 
 ### Author
