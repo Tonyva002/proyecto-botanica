@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { PlantaRepositoryImpl } from "../../infrastructure/typeorm/repositories/PlantaRepositoryImpl";
-import { ObtenerPlantas } from "../../application/use-cases/ObtenerPlnatas";
+import { ObtenerPlantas } from "../../application/use-cases/ObtenerPlantas";
 import { ObtenerPlantaPorId } from "../../application/use-cases/ObtenerPlantaPorId";
 import { PlantaController } from "../controllers/PlantaController";
 

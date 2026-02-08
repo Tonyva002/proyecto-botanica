@@ -18,12 +18,12 @@ export class CrearCuidado {
   async execute(input: CreateCuidadoInput): Promise<Cuidado> {
     const { plantaId, tipo, fechaInicio, fechaFin, notas } = input;
 
-    // ✅ Validar tipo
+    // Validar tipo
     if (!TIPOS_VALIDOS.includes(tipo as TipoCuidado)) {
       throw new Error(`Tipo de cuidado inválido: ${tipo}`);
     }
 
-    // ✅ Convertir fechas AQUÍ
+    // Convertir fechas AQUÍ
     const fechaInicioDate = new Date(fechaInicio);
     if (isNaN(fechaInicioDate.getTime())) {
       throw new Error("FechaInicio no es válida");
@@ -79,7 +79,7 @@ export class CrearCuidado {
       }
     }
 
-    // ✅ Crear dominio con Date reales
+    // Crear dominio con Date reales
     const cuidado = new Cuidado(
       0,
       tipo,

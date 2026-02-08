@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ObtenerPlantas } from "../../application/use-cases/ObtenerPlnatas";
+import { ObtenerPlantas } from "../../application/use-cases/ObtenerPlantas";
 import { ObtenerPlantaPorId } from "../../application/use-cases/ObtenerPlantaPorId";
 
 export class PlantaController {

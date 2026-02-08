@@ -36,7 +36,7 @@ const AppLayout: React.FC = () => {
 
   const title = usePageTitle();
 
-  //No mostrar "Plantas" cuando ya estás en plantas
+  // No mostrar el enlace "Ir a plantas" cuando ya estamos en la página de plantas
   const isPlantasPage =
     location.pathname === "/" || location.pathname === "/plantas";
 

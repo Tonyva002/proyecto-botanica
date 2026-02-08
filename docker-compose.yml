@@ -20,12 +20,8 @@ services:
     container_name: jardin-backend
     ports:
       - "4000:4000"
-    environment:
-      DB_HOST: mysql
-      DB_USER: root
-      DB_PASSWORD: password
-      DB_NAME: jardin
-      DB_PORT: 3306
+    env_file:
+      - ./jardin-backend/.env
     volumes:
       - ./jardin-backend:/app
       - /app/node_modules
