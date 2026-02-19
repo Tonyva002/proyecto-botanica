@@ -2,11 +2,21 @@ import { render, screen } from "@testing-library/react";
 import App from "../../../App";
 
 // Mockear paginas para aislar el test del router
-jest.mock("../../pages/PlantasPage", () => () => <div>Plantas Page</div>);
-jest.mock("../../pages/CuidadosPage", () => () => <div>Cuidados Page</div>);
-jest.mock("../../pages/PlantaDetailPage", () => () => (
-  <div>Planta Detail Page</div>
-));
+jest.mock(
+  "../../../presentation/pages/list-plants/PlantasPage",
+  () => () => <div>Plantas Page</div>
+);
+
+jest.mock(
+  "../../../presentation/pages/plant-care/CuidadosPage",
+  () => () => <div>Cuidados Page</div>
+);
+
+jest.mock(
+  "../../../presentation/pages/plant-details/PlantaDetailPage",
+  () => () => <div>Planta Detail Page</div>
+);
+
 
 describe("App routing y titulos", () => {
   beforeEach(() => {

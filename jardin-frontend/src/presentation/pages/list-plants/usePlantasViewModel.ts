@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Planta } from "../../domain/entities/Planta";
-import { getPlantasUseCase } from "../../core/composition/plantaCompositionRoot";
+
+import { getPlantasUseCase } from "../../../core/composition/plantaCompositionRoot";
+import { Planta } from "../../../domain/entities/Planta";
 
 export function usePlantasViewModel() {
   const [plantas, setPlantas] = useState<Planta[]>([]);

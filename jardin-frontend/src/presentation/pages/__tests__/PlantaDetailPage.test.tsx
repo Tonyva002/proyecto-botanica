@@ -1,10 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import usePlantaDetailViewModel from "../../viewmodels/usePlantaDetailViewModel";
+
 import { MemoryRouter } from "react-router-dom";
-import PlantaDetailPage from "../PlantaDetailPage";
+import usePlantaDetailViewModel from "../plant-details/usePlantaDetailViewModel";
+import PlantaDetailPage from "../plant-details/PlantaDetailPage";
 
 // Mock del ViewModel
-jest.mock("../../viewmodels/usePlantaDetailViewModel");
+jest.mock("../plant-details/usePlantaDetailViewModel");
 
 const mockUsePlantaDetailViewModel =
   usePlantaDetailViewModel as jest.MockedFunction<

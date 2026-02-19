@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react";
-import useCuidadosViewModel from "../viewmodels/useCuidadosViewModel";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -17,7 +16,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { getToday, formatDate } from "../../utils/date";
+import { getToday, formatDate } from "../../../utils/date";
+import useCuidadosViewModel from "./useCuidadosViewModel";
 
 const CuidadosPage = () => {
   const { id } = useParams<{ id: string }>();

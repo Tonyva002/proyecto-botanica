@@ -1,5 +1,5 @@
 import { useParams, Link as RouterLink } from "react-router-dom";
-import usePlantaDetailViewModel from "../viewmodels/usePlantaDetailViewModel";
+
 import {
   Box,
   Button,
@@ -11,7 +11,8 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { formatDate } from "../../utils/date";
+import { formatDate } from "../../../utils/date";
+import usePlantaDetailViewModel from "./usePlantaDetailViewModel";
 
 const PlantaDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -60,7 +61,7 @@ const PlantaDetailPage = () => {
           Cuidados
         </Typography>
 
-        {planta.cuidados && planta.cuidados.length > 0 ? (
+        {planta.cuidados && planta.cuidados?.length > 0 ? (
           <List>
             {planta.cuidados.map((c) => (
               <ListItem key={c.id} divider>

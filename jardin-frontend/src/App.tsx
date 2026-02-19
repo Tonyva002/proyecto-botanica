@@ -22,11 +22,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 
-import PlantasPage from "./presentation/pages/PlantasPage";
-import PlantaDetailPage from "./presentation/pages/PlantaDetailPage";
-import CuidadosPage from "./presentation/pages/CuidadosPage";
+
+import CuidadosPage from "./presentation/pages/plant-care/CuidadosPage";
 
 import { usePageTitle } from "./utils/usePageTitle";
+import PlantasPage from "./presentation/pages/list-plants/PlantasPage";
+import PlantaDetailPage from "./presentation/pages/plant-details/PlantaDetailPage";
 
 const AppLayout: React.FC = () => {
   const theme = useTheme();

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { Cuidado } from "../../domain/entities/Cuidado";
+import { Cuidado } from "../../../domain/entities/Cuidado";
 import {
   createCuidadoUseCase,
   getCuidadosUseCase,
-} from "../../core/composition/cuidadoCompositionRoot";
-import { getPlantaByIdUseCase } from "../../core/composition/plantaCompositionRoot";
+} from "../../../core/composition/cuidadoCompositionRoot";
+import { getPlantaByIdUseCase } from "../../../core/composition/plantaCompositionRoot";
 
 export default function useCuidadosViewModel(id?: string) {
   const [cuidados, setCuidados] = useState<Cuidado[]>([]);

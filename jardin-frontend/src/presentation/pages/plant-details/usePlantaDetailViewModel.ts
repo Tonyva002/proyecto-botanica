@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Planta } from "../../domain/entities/Planta";
-import { getPlantaByIdUseCase } from "../../core/composition/plantaCompositionRoot";
+import { Planta } from "../../../domain/entities/Planta";
+import { getPlantaByIdUseCase } from "../../../core/composition/plantaCompositionRoot";
 
 export default function usePlantaDetailViewModel(id?: string) {
   const [planta, setPlanta] = useState<Planta | null>(null);

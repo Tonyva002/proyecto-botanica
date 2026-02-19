@@ -6,8 +6,8 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { usePlantasViewModel } from "../viewmodels/usePlantasViewModel";
 import { Link as RouterLink } from "react-router-dom";
+import { usePlantasViewModel } from "./usePlantasViewModel";
 
 const PlantasPage = () => {
   const { plantas, loading } = usePlantasViewModel();
