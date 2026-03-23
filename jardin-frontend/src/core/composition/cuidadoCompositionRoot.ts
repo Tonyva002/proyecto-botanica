@@ -2,6 +2,7 @@ import CuidadoApiDataSource from "../../data/datasources/CuidadoApiDataSource";
 import { CuidadoRepositoryImpl } from "../../data/repositories/CuidadoRepositoryImpl";
 import { CreateCuidadoUseCase } from "../../domain/useCases/CreateCuidadoUseCase";
 import { GetCuidadosUseCase } from "../../domain/useCases/GetCuidadosUseCase";
+import { GetTipoCuidadoUseCase } from '../../domain/useCases/GetTipoCuidadoUseCase';
 
 //Infraestructura
 const cuidadoApiDataSource = new CuidadoApiDataSource();
@@ -13,3 +14,5 @@ const cuidadoRepository = new CuidadoRepositoryImpl(cuidadoApiDataSource);
 export const getCuidadosUseCase = new GetCuidadosUseCase(cuidadoRepository);
 
 export const createCuidadoUseCase = new CreateCuidadoUseCase(cuidadoRepository);
+
+export const getTipoCuidadoUseCase = new GetTipoCuidadoUseCase(cuidadoRepository)

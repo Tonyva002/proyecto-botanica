@@ -1,9 +1,9 @@
+import { esTipoCuidado } from "../../domain/constants/tiposCuidados";
 import { Cuidado } from "../../domain/entities/Cuidado";
 import { CuidadoRepository } from "../../domain/repositories/CuidadoRepository";
 
-const TIPOS_VALIDOS = ["Riego", "Poda", "Fertilizacion", "Luz"] as const;
-type TipoCuidado = (typeof TIPOS_VALIDOS)[number];
 
+// Datos de entrada necesarios para crear un cuidado.
 interface CreateCuidadoInput {
   plantaId: number;
   tipo: string;
@@ -18,34 +18,35 @@ export class CrearCuidado {
   async execute(input: CreateCuidadoInput): Promise<Cuidado> {
     const { plantaId, tipo, fechaInicio, fechaFin, notas } = input;
 
-    // Validar tipo
-    if (!TIPOS_VALIDOS.includes(tipo as TipoCuidado)) {
+    // Validar que el tipo recibido esté dentro de los permitidos.
+    if (!esTipoCuidado(tipo)) {
       throw new Error(`Tipo de cuidado inválido: ${tipo}`);
     }
 
-    // Convertir fechas AQUÍ
+    // Convertir y validar fechaInicio.
     const fechaInicioDate = new Date(fechaInicio);
     if (isNaN(fechaInicioDate.getTime())) {
       throw new Error("FechaInicio no es válida");
     }
 
+    // Convertir y validar fechaFin
     const fechaFinDate = fechaFin ? new Date(fechaFin) : undefined;
-
     if (fechaFinDate && isNaN(fechaFinDate.getTime())) {
       throw new Error("FechaFin no es válida");
     }
 
+    // Regla de negocio: la fecha final no puede ser anterior a la inicial.
     if (fechaFinDate && fechaFinDate < fechaInicioDate) {
       throw new Error("FechaFin no puede ser anterior a FechaInicio");
     }
 
-    // Obtener cuidados existentes
+    // Buscar todos los cuidados ya registrados para esa planta.
     const cuidados = await this.repo.findCuidadoByPlanta(plantaId);
 
     for (const c of cuidados) {
       const cFechaInicio = new Date(c.fechaInicio);
 
-      // No repetir cuidado el mismo día
+      // Regla de negocio: no se puede repetir el mismo tipo de cuidado el mismo día.
       if (
         c.tipo === tipo &&
         cFechaInicio.toDateString() === fechaInicioDate.toDateString()
@@ -55,7 +56,7 @@ export class CrearCuidado {
         );
       }
 
-      // Riego 24h después de fertilización
+      // Regla de negocio: no se puede regar dentro de las 24h posteriores a una fertilización.
       if (tipo === "Riego" && c.tipo === "Fertilizacion") {
         const diff = fechaInicioDate.getTime() - c.fechaInicio.getTime();
 
@@ -65,8 +66,8 @@ export class CrearCuidado {
           );
         }
       }
-
-      // Poda y fertilización el mismo día
+ 
+      // Regla de negocio: poda y fertilización no pueden ocurrir el mismo día.
       if (
         (tipo === "Poda" && c.tipo === "Fertilizacion") ||
         (tipo === "Fertilizacion" && c.tipo === "Poda")
@@ -79,7 +80,7 @@ export class CrearCuidado {
       }
     }
 
-    // Crear dominio con Date reales
+    // Crear la entidad del dominio con fechas ya convertidas a Date.
     const cuidado = new Cuidado(
       0,
       tipo,
@@ -88,6 +89,7 @@ export class CrearCuidado {
       notas ?? undefined,
     );
 
+    // Guardar el nuevo cuidado asociado a la planta.
     return this.repo.save(cuidado, plantaId);
   }
 }

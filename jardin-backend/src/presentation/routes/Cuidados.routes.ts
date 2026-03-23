@@ -14,5 +14,6 @@ const controller = new CuidadoController(crear, listar);
 
 router.post("/", (req, res) => controller.create(req, res));
 router.get("/", (req, res) => controller.list(req, res));
+router.get("/tipos_cuidado", (req, res) => controller.getAllType(req, res));
 
 export default router;

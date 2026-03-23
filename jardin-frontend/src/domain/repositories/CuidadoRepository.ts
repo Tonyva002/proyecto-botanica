@@ -1,4 +1,4 @@
-import { Cuidado } from "../entities/Cuidado";
+import { Cuidado, TipoCuidado } from "../entities/Cuidado";
 
 export interface CreateCuidadoPayload {
   tipo: string;
@@ -9,4 +9,5 @@ export interface CreateCuidadoPayload {
 export interface CuidadoRepository {
   findByPlanta(plantaId: number): Promise<Cuidado[]>;
   create(data: CreateCuidadoPayload): Promise<Cuidado>;
+  getAllTypes(): Promise<TipoCuidado[]>
 }

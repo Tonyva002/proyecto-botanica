@@ -7,12 +7,11 @@ import useCuidadosViewModel from "../plant-care/useCuidadosViewModel";
 //✅ Mock del viewModel
 jest.mock("../plant-care/useCuidadosViewModel");
 
-//✅ Mock explícito de useParams (clave para evitar NaN)
+//✅ Mock explícito de useParams
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: () => ({ id: "1" }),
 }));
-
 
 const mockUseCuidadosViewModel = useCuidadosViewModel as jest.MockedFunction<
   typeof useCuidadosViewModel
@@ -38,6 +37,7 @@ describe("CuidadosPage", () => {
     mockUseCuidadosViewModel.mockReturnValue({
       cuidados: [],
       plantaNombre: "",
+      tipoCuidados: [],
       loading: true,
       crearCuidado: mockCrearCuidado,
     });
@@ -48,78 +48,132 @@ describe("CuidadosPage", () => {
   });
 
   test("renderiza la lista de cuidados", () => {
-  mockUseCuidadosViewModel.mockReturnValue({
-    loading: false,
-    plantaNombre: "Aloe Vera",
-    crearCuidado: mockCrearCuidado,
-    cuidados: [
-      {
-        id: 1,
-        tipo: "Riego",
-        fechaInicio: "2025-02-23",
-        fechaFin: "2025-02-24",
-        planta: {
+    mockUseCuidadosViewModel.mockReturnValue({
+      loading: false,
+      plantaNombre: "Aloe Vera",
+      tipoCuidados: ["Riego", "Poda", "Fertilizacion", "Luz"],
+      crearCuidado: mockCrearCuidado,
+      cuidados: [
+        {
           id: 1,
-          nombre: "Aloe Vera",
-          especie: "Suculenta",
-          ubicacion: "Patio",
-          fechaRegistro: "2025-02-01",
+          tipo: "Riego",
+          fechaInicio: "2025-02-23",
+          fechaFin: "2025-02-24",
+          planta: {
+            id: 1,
+            nombre: "Aloe Vera",
+            especie: "Suculenta",
+            ubicacion: "Patio",
+            fechaRegistro: "2025-02-01",
+          },
         },
-      },
-      {
-        id: 2,
-        tipo: "Poda",
-        fechaInicio: "2025-03-10",
-        fechaFin: "2025-03-11",
-        planta: {
+        {
           id: 2,
-          nombre: "Rosa",
-          especie: "Flor",
-          ubicacion: "Jardin",
-          fechaRegistro: "2025-03-01",
+          tipo: "Poda",
+          fechaInicio: "2025-03-10",
+          fechaFin: "2025-03-11",
+          planta: {
+            id: 2,
+            nombre: "Rosa",
+            especie: "Flor",
+            ubicacion: "Jardin",
+            fechaRegistro: "2025-03-01",
+          },
         },
-      },
-    ],
+      ],
+    });
+
+    renderWithRouter(<CuidadosPage />);
+
+    expect(
+      screen.getByRole("heading", { name: /cuidados de aloe vera/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Riego")).toBeInTheDocument();
+    expect(screen.getByText("Poda")).toBeInTheDocument();
   });
 
-  renderWithRouter(<CuidadosPage />);
+  test("renderiza las opciones de tipo de cuidado", async () => {
+    mockUseCuidadosViewModel.mockReturnValue({
+      loading: false,
+      plantaNombre: "Aloe Vera",
+      tipoCuidados: ["Riego", "Poda", "Fertilizacion", "Luz"],
+      cuidados: [],
+      crearCuidado: mockCrearCuidado,
+    });
 
-  expect(screen.getByRole("heading", { name: /cuidados de aloe vera/i })).toBeInTheDocument();
-  expect(screen.getByText("Riego")).toBeInTheDocument();
-  expect(screen.getByText("Poda")).toBeInTheDocument();
-});
+    renderWithRouter(<CuidadosPage />);
 
+    fireEvent.mouseDown(screen.getByLabelText(/tipo/i));
 
- test("envia el formulario y llama a crearCuidado con plantaId", async () => {
-  mockUseCuidadosViewModel.mockReturnValue({
-    loading: false,
-    plantaNombre: "Aloe Vera",
-    cuidados: [],
-    crearCuidado: mockCrearCuidado,
+    expect(await screen.findByText("Riego")).toBeInTheDocument();
+    expect(screen.getByText("Poda")).toBeInTheDocument();
+    expect(screen.getByText("Fertilizacion")).toBeInTheDocument();
+    expect(screen.getByText("Luz")).toBeInTheDocument();
   });
 
-  renderWithRouter(<CuidadosPage />);
+  test("envia el formulario y llama a crearCuidado con plantaId", async () => {
+    mockUseCuidadosViewModel.mockReturnValue({
+      loading: false,
+      plantaNombre: "Aloe Vera",
+      tipoCuidados: ["Riego", "Poda", "Fertilizacion", "Luz"],
+      cuidados: [],
+      crearCuidado: mockCrearCuidado,
+    });
 
-  fireEvent.change(screen.getByLabelText(/tipo/i), {
-    target: { value: "Riego" },
+    renderWithRouter(<CuidadosPage />);
+
+    fireEvent.mouseDown(screen.getByLabelText(/tipo/i));
+    fireEvent.click(await screen.findByText("Riego"));
+    fireEvent.change(screen.getByLabelText(/fecha inicio/i), {
+      target: { value: "2025-01-16" },
+    });
+
+    fireEvent.change(screen.getByLabelText(/fecha fin/i), {
+      target: { value: "2025-01-17" },
+    });
+
+    fireEvent.change(screen.getByLabelText(/notas/i), {
+      target: { value: "Regar por la mañana" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /agregar/i }));
+
+    await waitFor(() => {
+      expect(mockCrearCuidado).toHaveBeenCalledWith(
+        expect.objectContaining({
+          plantaId: 1,
+          tipo: "Riego",
+          fechaInicio: "2025-01-16",
+          fechaFin: "2025-01-17",
+          notas: "Regar por la mañana",
+        }),
+      );
+    });
   });
+   test("muestra dialogo de error si crearCuidado falla", async () => {
+    mockCrearCuidado.mockRejectedValueOnce(new Error("Error al crear cuidado"));
 
-  fireEvent.change(screen.getByLabelText(/fecha inicio/i), {
-    target: { value: "2025-01-16" },
+    mockUseCuidadosViewModel.mockReturnValue({
+      loading: false,
+      plantaNombre: "Aloe Vera",
+      tipoCuidados: ["Riego", "Poda"],
+      cuidados: [],
+      crearCuidado: mockCrearCuidado,
+    });
+
+    renderWithRouter(<CuidadosPage />);
+
+    fireEvent.mouseDown(screen.getByLabelText(/tipo/i));
+    fireEvent.click(await screen.findByText("Riego"));
+
+    fireEvent.change(screen.getByLabelText(/fecha inicio/i), {
+      target: { value: "2025-01-16" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /agregar/i }));
+
+    expect(
+      await screen.findByText(/error al crear cuidado/i),
+    ).toBeInTheDocument();
   });
-
-  fireEvent.click(screen.getByRole("button", { name: /agregar/i }));
-
-  await waitFor(() => {
-  expect(mockCrearCuidado).toHaveBeenCalledWith(
-    expect.objectContaining({
-      plantaId: 1,
-      tipo: "Riego",
-      fechaInicio: "2025-01-16",
-    })
-  );
-});
-
-});
-
 });

@@ -1,30 +1,37 @@
 import { useCallback, useEffect, useState } from "react";
-import { Cuidado } from "../../../domain/entities/Cuidado";
+import { Cuidado, type TipoCuidado } from "../../../domain/entities/Cuidado";
 import {
   createCuidadoUseCase,
   getCuidadosUseCase,
+  getTipoCuidadoUseCase,
 } from "../../../core/composition/cuidadoCompositionRoot";
 import { getPlantaByIdUseCase } from "../../../core/composition/plantaCompositionRoot";
 
 export default function useCuidadosViewModel(id?: string) {
   const [cuidados, setCuidados] = useState<Cuidado[]>([]);
   const [plantaNombre, setPlantaNombre] = useState<string>("");
-  const [loading, setLoading] = useState(true);
+  const [tipoCuidados, setTipoCuidados] = useState<TipoCuidado[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const cargar = useCallback(async () => {
-    if (!id) return;
-    setLoading(true);
-    try {
+ const cargar = useCallback(async () => {
+  setLoading(true);
+  try {
+    const tiposData = await getTipoCuidadoUseCase.execute();
+    setTipoCuidados(tiposData);
+
+    if (id) {
       const [cuidadosData, plantaData] = await Promise.all([
         getCuidadosUseCase.execute(Number(id)),
         getPlantaByIdUseCase.execute(Number(id)),
       ]);
+
       setCuidados(cuidadosData);
       setPlantaNombre(plantaData.nombre);
-    } finally {
-      setLoading(false);
     }
-  }, [id]);
+  } finally {
+    setLoading(false);
+  }
+}, [id]);
 
   const crearCuidado = async (payload: {
     plantaId: number;
@@ -48,6 +55,7 @@ export default function useCuidadosViewModel(id?: string) {
   return {
     cuidados,
     plantaNombre,
+    tipoCuidados,
     loading,
     crearCuidado,
   };

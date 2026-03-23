@@ -1,5 +1,7 @@
 import { Planta } from "./Planta";
 
+export type TipoCuidado = "Riego" | "Poda" | "Fertilizacion" | "Luz";
+
 export interface Cuidado {
   id: number;
   tipo: string;

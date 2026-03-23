@@ -10,9 +10,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
   List,
   ListItem,
   ListItemText,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -22,7 +26,7 @@ import useCuidadosViewModel from "./useCuidadosViewModel";
 const CuidadosPage = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { cuidados, plantaNombre, loading, crearCuidado } =
+  const { cuidados, plantaNombre, tipoCuidados, loading, crearCuidado } =
     useCuidadosViewModel(id);
 
   const [tipo, setTipo] = useState("");
@@ -52,6 +56,8 @@ const CuidadosPage = () => {
       });
       setTipo("");
       setNotas("");
+      setFechaInicio(getToday());
+      setFechaFin(getToday());
     } catch (e: any) {
       setError(e.message || "Error inesperado al crear el cuidado");
       setOpenErrorDialog(true);
@@ -72,14 +78,25 @@ const CuidadosPage = () => {
       <Card sx={{ my: 3 }}>
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <TextField
-              label="Tipo"
-              value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
-              fullWidth
-              required
-              sx={{ mb: 2 }}
-            />
+            <FormControl fullWidth required sx={{ mb: 2 }}>
+              <InputLabel id="tipo-cuidado-label">Tipo</InputLabel>
+              <Select
+                labelId="tipo-cuidado-label"
+                value={tipo}
+                label="Tipo"
+                onChange={(e) => setTipo(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>Seleccione un tipo</em>
+                </MenuItem>
+
+                {tipoCuidados.map((t) => (
+                  <MenuItem key={t} value={t}>
+                    {t}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
             <TextField
               label="Fecha inicio"

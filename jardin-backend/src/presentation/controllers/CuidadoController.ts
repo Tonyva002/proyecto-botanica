@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CrearCuidado } from "../../application/use-cases/CrearCuidado";
 import { ListarCuidados } from "../../application/use-cases/ListarCuidados";
+import { TIPOS_CUIDADO } from "../../domain/constants/tiposCuidados";
 
 export class CuidadoController {
   constructor(
@@ -43,5 +44,12 @@ export class CuidadoController {
 
     const cuidados = await this.listarCuidados.execute(plantaId);
     return res.json(cuidados);
+  }
+
+   getAllType(_req: Request, res: Response) {
+    res.status(200).json({
+      success: true,
+      data: TIPOS_CUIDADO,
+    });
   }
 }

@@ -8,7 +8,7 @@ import { seedDatabase } from "./infrastructure/database/seed";
 import plantasRouter from "./presentation/routes/plantas.routes";
 import cuidadosRouter from "./presentation/routes/Cuidados.routes";
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 /**
  * Inicializa la conexión a la base de datos y arranca el servidor Express.
