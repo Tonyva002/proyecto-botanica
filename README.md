@@ -10,9 +10,10 @@ This application allows you to see the number of plants in a garden, see the det
 ### Built with
 
 - Mysql
-- Node js
+- Node.js
 - Express
-- React js
+- React.js
+- MUI
 - Axios
 - Docker
 - MVVM
