@@ -10,9 +10,10 @@ This application allows you to see the number of plants in a garden, see the det
 ### Built with
 
 - Mysql
-- Node js
+- Node.js
 - Express
-- React js
+- React.js
+- MUI
 - Axios
 - Docker
 - MVVM
@@ -31,9 +32,10 @@ This application allows you to see the number of plants in a garden, see the det
 - Step 1. Download or Clone the repository
 - Step 2. Unzip the file if you have downloaded it
 - Step 3. Open in Visual Studio Code (VSC)
-- Step 4. Open docker
-- Step 5. In the vsc terminal run: docker-compose up --build
-- Step 6. In the browser:   http://localhost
+- Step 4. En la terminal ejecuta: copy jardin-backend.env.example jardin-backend.env
+- Step 5. Open docker
+- Step 6. In the vsc terminal run: docker-compose up --build
+- Step 7. In the browser:   http://localhost
 
 ## Screenshots
 
@@ -47,13 +49,16 @@ This application allows you to see the number of plants in a garden, see the det
 ![Screen 3](https://github.com/user-attachments/assets/fdc6898e-d9c0-4a92-89cb-027297b8892f)
 
 ### 4)
-![Screen 3](https://github.com/user-attachments/assets/e3672b5e-5146-437a-8791-da6ac8584284)
+![Screen 4](https://github.com/user-attachments/assets/44834a57-8108-4585-b2c6-aec6bf54ac08)
 
 ### 5)
-![Screen 3](https://github.com/user-attachments/assets/732a0a35-08b2-4eec-bd47-b77ee6791b41)
+![Screen 5](https://github.com/user-attachments/assets/e3672b5e-5146-437a-8791-da6ac8584284)
 
 ### 6)
-![Screen 3](https://github.com/user-attachments/assets/69837277-6bcf-41e6-a494-888de4d9ed10)
+![Screen 6](https://github.com/user-attachments/assets/732a0a35-08b2-4eec-bd47-b77ee6791b41)
+
+### 7)
+![Screen 7](https://github.com/user-attachments/assets/69837277-6bcf-41e6-a494-888de4d9ed10)
 
 
 
