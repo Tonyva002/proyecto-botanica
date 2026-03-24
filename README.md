@@ -32,9 +32,10 @@ This application allows you to see the number of plants in a garden, see the det
 - Step 1. Download or Clone the repository
 - Step 2. Unzip the file if you have downloaded it
 - Step 3. Open in Visual Studio Code (VSC)
-- Step 4. Open docker
-- Step 5. In the vsc terminal run: docker-compose up --build
-- Step 6. In the browser:   http://localhost
+- Step 4. En la terminal ejecuta: copy jardin-backend.env.example jardin-backend.env
+- Step 5. Open docker
+- Step 6. In the vsc terminal run: docker-compose up --build
+- Step 7. In the browser:   http://localhost
 
 ## Screenshots
 
